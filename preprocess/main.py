@@ -14,7 +14,7 @@ def load_multiple_jsonl(filenames: List[str]):
 def concat_post_replies(post: Dict, min_reply_like_count: int):
     concated_data = []
     for reply in post.replies:
-        pass
+        concated_data.append('[BOS]')
 
 
 if __name__ == '__main__':
