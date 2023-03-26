@@ -45,20 +45,22 @@ def test_subs_by_table():
 
 
 def test_build_user_dict():
-    example = '[BOS] @sad @slas ldk I am dog man. #dog_man #bigdog [EOS]'
+    example = '[BOS]@sad @slas @saddd\n ldk I am dog man. #dog_man #bigdog [EOS]'
 
     print(build_user_dict(text=example))
     assert build_user_dict(text=example) == {
         '@sad': 'user',
         '@slas': 'user',
+        '@saddd': 'user',
     }
 
 
 def test_build_tag_dict():
-    example = '[BOS] @sad @slas ldk I am dog man. #dog_man #bigdog [EOS]'
+    example = '[BOS] @sad @slas ldk I am dog man. #asd #dog_man\n#bigdog[EOS]'
 
     print(build_tag_dict(text=example))
     assert build_tag_dict(text=example) == {
+        '#asd': 'tag',
         '#dog_man': 'tag',
         '#bigdog': 'tag',
     }

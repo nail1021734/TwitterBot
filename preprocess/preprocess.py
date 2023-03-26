@@ -4,9 +4,9 @@ from typing import List, Dict
 
 
 #TODO Update the pattern, make the pattern can match the USER that following [EOS], \s, \n or endoftext.
-USER_PATTERN = re.compile(r'(@.+?)\s')
+USER_PATTERN = re.compile(r'(@.+?)(?:\s|\[EOS\]|\n|$)')
 
-TAG_PATTERN = re.compile(r'(#.+?)\s')
+TAG_PATTERN = re.compile(r'(#.+?)(?:\s|\[EOS\]|\n|$)')
 
 
 def subs_by_table(
