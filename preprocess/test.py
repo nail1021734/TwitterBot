@@ -3,6 +3,7 @@ from preprocess import (
     subs_by_table,
     build_tag_dict,
     build_user_dict,
+    subs_urls,
 )
 
 
@@ -47,7 +48,6 @@ def test_subs_by_table():
 def test_build_user_dict():
     example = '[BOS]@sad @slas @saddd\n ldk I am dog man. #dog_man #bigdog [EOS]'
 
-    print(build_user_dict(text=example))
     assert build_user_dict(text=example) == {
         '@sad': 'user',
         '@slas': 'user',
@@ -58,9 +58,13 @@ def test_build_user_dict():
 def test_build_tag_dict():
     example = '[BOS] @sad @slas ldk I am dog man. #asd #dog_man\n#bigdog[EOS]'
 
-    print(build_tag_dict(text=example))
     assert build_tag_dict(text=example) == {
         '#asd': 'tag',
         '#dog_man': 'tag',
         '#bigdog': 'tag',
     }
+
+def test_subs_urls():
+    example = '[BOS] https://sadkjl.com.tw ;lfjlsajdklak ewljf [EOS]'
+
+    assert subs_urls(text=example) == '[BOS] [URL] ;lfjlsajdklak ewljf [EOS]'

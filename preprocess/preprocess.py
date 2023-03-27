@@ -47,3 +47,7 @@ def build_user_dict(text: str):
 
 def build_tag_dict(text: str):
     return {tag: 'tag' for tag in TAG_PATTERN.findall(text)}
+
+
+def subs_urls(text: str):
+    return re.sub(r'https?://[A-Za-z0-9\-._~:/?#\[\]@!$&\'()*+,;%=]+', '[URL]', text)
