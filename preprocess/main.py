@@ -1,33 +1,32 @@
 from pathlib import Path
-from data_crawler.utils import load_jsonl
+from data_crawler.utils import load_multiple_jsonl, save_jsonl
 from typing import List, Dict
-
-
-def load_multiple_jsonl(filenames: List[str]):
-    merged_data = []
-    for filename in filenames:
-        merged_data += load_jsonl(filename)
-
-    return merged_data
-
-
-def concat_post_replies(post: Dict, min_reply_like_count: int):
-    concated_data = []
-    for reply in post.replies:
-        concated_data.append('[BOS]')
+from preprocess.funcs import (
+    build_tag_dict,
+    build_user_dict,
+    subs_by_table,
+    subs_urls,
+    concat_post_replies,
+    preprocess,
+)
 
 
 if __name__ == '__main__':
     # Merge each file.
     filenames = [
-        'data_crawler/HibikiVtuberTW.jsonl',
-        'data_crawler/KSPKSP01.jsonl',
-        'data_crawler/lily.jsonl',
+        # 'data_crawler/HibikiVtuberTW.jsonl',
+        # 'data_crawler/KSPKSP01.jsonl',
+        # 'data_crawler/lily.jsonl',
         'data_crawler/LocoLost65.jsonl',
     ]
     data = load_multiple_jsonl(filenames=filenames)
 
     # Concat post text and reply.
-    print(data[0])
+    concated_data = []
+    [concated_data.extend(concat_post_replies(post=post, min_reply_like_count=2)) for post in data]
+
     # Preprocessing
+    data = [preprocess(text=text) for text in concated_data]
+
     # Save as jsonl file.
+    save_jsonl(data=data, filename='merged_data.jsonl', overwrite=True)

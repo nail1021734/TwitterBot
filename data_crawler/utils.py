@@ -76,27 +76,9 @@ def get_replies_by_conversation_id(conversation_id: int, max_reply_num: int = ma
     return replies
 
 
-if __name__ == "__main__":
-    # User list
-    users = [
-        # 'margaretthebox',
-        # 'linglanthebox',
-        'LocoLost65',
-        'MizukiVtuberTW',
-        'SekiVtuberTW',
-        'KSPKSP01',
-        'shibasakithebox',
-        'HibikiVtuberTW',
-        'paitan6111',
-    ]
+def load_multiple_jsonl(filenames: List[str]):
+    merged_data = []
+    for filename in filenames:
+        merged_data += load_jsonl(filename)
 
-    for name in users:
-        # Enter user name
-        user_posts = get_user_posts(user_name=name)
-
-        # Get reply of each post.
-        for index, post in tqdm(list(enumerate(user_posts))):
-            replies = get_replies_by_conversation_id(conversation_id=post['conversationId'], max_reply_num=10000, min_like=2)
-            user_posts[index]['replies'] = replies
-
-        save_jsonl(filename=f'{name}.jsonl', data=user_posts, overwrite=True)
+    return merged_data
