@@ -1,5 +1,5 @@
 import pytest
-from preprocess import (
+from preprocess.funcs import (
     subs_by_table,
     build_tag_dict,
     build_user_dict,

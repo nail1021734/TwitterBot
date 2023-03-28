@@ -2,10 +2,6 @@ from pathlib import Path
 from data_crawler.utils import load_multiple_jsonl, save_jsonl
 from typing import List, Dict
 from preprocess.funcs import (
-    build_tag_dict,
-    build_user_dict,
-    subs_by_table,
-    subs_urls,
     concat_post_replies,
     preprocess,
 )
@@ -23,7 +19,7 @@ if __name__ == '__main__':
 
     # Concat post text and reply.
     concated_data = []
-    [concated_data.extend(concat_post_replies(post=post, min_reply_like_count=2)) for post in data]
+    [concated_data.extend(concat_post_replies(post=post, min_reply_like_count=2, min_length=5)) for post in data]
 
     # Preprocessing
     data = [preprocess(text=text) for text in concated_data]
